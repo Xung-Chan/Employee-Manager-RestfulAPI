@@ -1,0 +1,71 @@
+@media only screen and (max-width: 650px) {
+  body {
+    font-size: 15px;
+  }
+}
+@media only screen and (max-width: 630px) {
+  body {
+    font-size: 11px;
+  }
+}
+.trash {
+  color: red;
+}
+
+.pen {
+  color: rgba(167, 167, 16, 0.8);
+}
+
+.row--background {
+  background-color: rgba(10, 10, 237, 0.811);
+}
+
+.btn--special {
+  background-color: rgba(10, 10, 237, 0.811);
+}
+
+.btn__delete--danger {
+  background-color: red;
+  color: white;
+}
+
+.btn--success {
+  background-color: rgba(0, 128, 0, 0.681);
+  color: white;
+}
+
+.modal-title {
+  padding-left: 27%;
+}
+
+.namecompany,
+.name,
+.username,
+.phone,
+.email,
+.website,
+.catchPhrase,
+.bs {
+  width: 100%;
+}
+
+.street,
+.suite,
+.city,
+.zipcode {
+  width: 170px;
+}
+
+.lat,
+.lng {
+  width: 130px;
+}
+
+label {
+  color: green;
+}
+
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+  background-color: rgba(255, 192, 203, 0.733);
+}/*# sourceMappingURL=api.css.map */
