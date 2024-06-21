@@ -1,5 +1,5 @@
 <?php
-class Db
+class DB
 {
     private $hostName = 'localhost';
     private $dbName = 'employee_manager_test';
@@ -9,7 +9,7 @@ class Db
     private function __construct()
     {
         try {
-            self::$conn = new PDO("mysql:host=$this->hostName;dbname=$this->dbName", $this->username . $this->password);
+            self::$conn = new PDO("mysql:host=$this->hostName;dbname=$this->dbName", $this->username, $this->password);
             self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo 'Connection failed:' . $e->getMessage();
@@ -18,7 +18,7 @@ class Db
     public static function getInstance()
     {
         if (self::$conn == null) {
-            new Db();
+            new DB();
         }
         return self::$conn;
     }

@@ -1,4 +1,4 @@
-var API = 'api/user.php';
+var API = 'app/api/user.php';
 
 function start() {
     handerinfo(readAll);
@@ -27,7 +27,7 @@ function handerinfo(callback) {
 function readAll(data) {
     let tbody = document.getElementById("data_table");
     tbody.innerHTML = "";
-    data = data.response;
+    data = data.responses;
     console.log(data);
     data.forEach((item) => {
         let row = document.createElement("tr");
