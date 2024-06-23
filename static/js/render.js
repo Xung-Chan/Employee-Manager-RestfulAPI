@@ -1,14 +1,23 @@
-function renderElement(endPoint) {
+function renderUsers(endPoint, startPage) {
     fetch(endPoint)
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
+            $('#pagination-user').twbsPagination({
+                totalPages: data.totalPages,
+                startPage: startPage,
+                visiblePages: 7,
+                onPageClick: function (event, page) {
+                    renderUsers('app/api/user.php?page=' + page, page);
+                }
+            });
+            $('#quantity-show').html('Showing <span class="fw-bold">5 </span> out of <span class="fw-bold">' + data.totalPages + '</span> entries')
             data = data.responses;
             let table = document.getElementById('data_table');
             let htmls = '';
             data.forEach((user) => {
                 htmls += `<tr>
                         <td><input type="checkbox"></td>
+                        <td>${user.id}</td>
                         <td>${user.fullName}</td>
                         <td>${user.username}</td>
                         <td>${user.email}</td>
@@ -32,5 +41,3 @@ function renderElement(endPoint) {
             console.error('Error fetching data:', error);
         })
 }
-
-renderElement('http://localhost:8080/EmployeeManagerTest/app/api/user.php');

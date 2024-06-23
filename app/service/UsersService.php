@@ -16,11 +16,51 @@ class UsersService
     public function doGet()
     {
         if (empty($_GET)) {
-            $results = UsersRepo::getInstance()->getAllUsers();
-            $data = ['totalPages' => count($results), 'responses' => $results];
-            return $data;
+            return UsersRepo::getInstance()->getAllUsers();
+        }
+        if (isset($_GET['page'])) {
+            $page = $_GET['page'];
+            return UsersRepo::getInstance()->getUsersByPage($page);
         }
         return ['error' => 'Invalid request'];
+    }
+    public function doPost()
+    {
+        $fullParameters = ['fullName', 'username', 'email', 'address', 'phone', 'company', 'website'];
+        $checkParameters = $this->isFullParameters($fullParameters);
+        if ($checkParameters != 1) {
+            return $checkParameters;
+        }
+        $values = $this->getValues($fullParameters);
+        return UsersRepo::getInstance()->addUser($values);
+    }
+    private function isFullParameters($fullParameters)
+    {
+
+        foreach ($fullParameters as $para) {
+            if (!isset($_POST[$para]))
+                return ['error' => 'Missing parameter' . $para];
+        }
+        return true;
+    }
+    private function getValues($fullParameters)
+    {
+        $values = [];
+        foreach ($fullParameters as $para) {
+            $values[] = $_POST[$para];
+        }
+        return $values;
+    }
+    public function doDelete()
+    {
+        try {
+            if (!isset($_GET['id'])) {
+                return ['error' => 'Missing id'];
+            }
+            return UsersRepo::getInstance()->removeUser($_GET['id']);
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
 }
 ?>
