@@ -19,7 +19,7 @@
             <div class="col col-6 m-auto text-w hite">
                 <div class="fs-3"> Manage <span class="fw-bold"> Employees </span> </div>
             </div>
-            <button onclick="deleteSelected()" class=" btn btn-danger col col-2  m-2 delete_employees">
+            <button class=" btn btn-danger col col-2  m-2 delete_employees" id="deleteMultiUser-button">
                 <i class="fas fa-minus-circle"></i>
                 Delete
             </button>
@@ -196,11 +196,31 @@
                 .then(response => response.json())
                 .then((response) => {
                     console.log(response);
-                    $('#pagination-user').twbsPagination('destroy');
-                    renderUsers('app/api/user.php?page=1', 1);
+                    // $('#pagination-user').twbsPagination('destroy');
+                    // renderUsers('app/api/user.php?page=1', 1);
+                    reloadRenderUser();
                 })
                 .catch((error) => { console.error('Post error:' + error) })
-        })  
+        })
+        function deleteSingleUser(id) {
+            fetch('app/api/user.php', {
+                method: 'DELETE',
+                body: JSON.stringify({ 'id': id }),
+            })
+                .then((response) => response.json())
+                .then((response) => {
+                    console.log(response);
+                    reloadRenderUser();
+                })
+                .catch((error) => { console.error('Delete error:' + error) })
+        }
+        $('#deleteMultiUser-button').click(() => {
+            let userSelected = document.querySelectorAll('td input[type="checkbox"]:checked');
+            userSelected.forEach((userCheckbox) => {
+                let id = userCheckbox.id.split('_')[1];
+                deleteSingleUser(id);
+            })
+        })
     </script>
 
 </body>

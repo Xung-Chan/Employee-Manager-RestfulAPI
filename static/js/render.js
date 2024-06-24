@@ -16,7 +16,7 @@ function renderUsers(endPoint, startPage) {
             let htmls = '';
             data.forEach((user) => {
                 htmls += `<tr>
-                        <td><input type="checkbox"></td>
+                        <td><input type="checkbox" id="user_${user.id}"></td>
                         <td>${user.id}</td>
                         <td>${user.fullName}</td>
                         <td>${user.username}</td>
@@ -29,7 +29,7 @@ function renderUsers(endPoint, startPage) {
                             <button onclick="" class="btn btn-sm btn--pen pen" data-id="1" data-bs-toggle="modal" data-bs-target="#modalEdit">
                                 <i class="fas fa-pen"></i>
                             </button>
-                            <button onclick="" class="btn btn--trash trash">
+                            <button onclick="deleteSingleUser(${user.id})" class="btn btn--trash trash">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
@@ -40,4 +40,8 @@ function renderUsers(endPoint, startPage) {
         .catch((error) => {
             console.error('Error fetching data:', error);
         })
+}
+function reloadRenderUser() {
+    $('#pagination-user').twbsPagination('destroy');
+    renderUsers('app/api/user.php?page=1');
 }
