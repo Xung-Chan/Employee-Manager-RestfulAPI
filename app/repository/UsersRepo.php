@@ -54,15 +54,6 @@ class UsersRepo
         $query = 'INSERT INTO users(fullName, username, email, address, phone, website, company) values (?,?,?,?,?,?,?);';
         $conn = DB::getInstance();
         $stmt = $conn->prepare($query);
-        // $stmt->execute([
-        //     $values['fullName'],
-        //     $values['name'],
-        //     $values['email'],
-        //     $values['address'],
-        //     $values['phone'],
-        //     $values['website'],
-        //     $values['company']
-        // ]);
         $stmt->execute($values);
         return ['Successfully' => 'User inserted with id:' . $this->getLastestInserted()];
     }

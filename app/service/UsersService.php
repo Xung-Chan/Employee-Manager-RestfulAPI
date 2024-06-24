@@ -54,10 +54,14 @@ class UsersService
     public function doDelete()
     {
         try {
-            if (!isset($_GET['id'])) {
-                return ['error' => 'Missing id'];
+            $input = file_get_contents('php://input');
+            $data = json_decode($input);
+
+            if (!isset($data->id)) {
+                echo json_encode(['error' => 'Missing parameter id']);
+                exit;
             }
-            return UsersRepo::getInstance()->removeUser($_GET['id']);
+            return UsersRepo::getInstance()->removeUser($data->id);
         } catch (Exception $e) {
             return ['error' => $e->getMessage()];
         }
